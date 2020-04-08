@@ -1,16 +1,16 @@
 package RPIS81.Mochalov.oop.model;
 
-import java.util.Arrays;
-import java.util.Objects;
 
 public class AccountManager {
     private Account [] accounts;
     private int size;
+    private final static Account DEFAULT_ACCOUNT = new Account();
+    final static IndividualsTariff DEFAULT_TARIFF = new IndividualsTariff();
     //конструктор принимающий один параметр – число счетов, инициализирующий массив
     //соответствующим числом элементов (сами элементы имеют значение null)
-    public AccountManager(int NumberOfCounts) {
-        accounts = new Account[NumberOfCounts];
-        size = NumberOfCounts;
+    public AccountManager(int size) {
+        this.accounts = new Account[size];
+        this.size = size;
     }
     /* конструктор принимающий массив счетов. В этом конструкторе происходит копирование элементов в
 новый массив, и ссылка на него записывается в атрибут. */
@@ -47,13 +47,14 @@ public class AccountManager {
     }
     /*метод изменяющий ссылку на экземпляр класса Account по его номеру в массиве.
     Принимает в качестве параметров номер и ссылку на экземпляр класса Account. Возвращает ссылку, которую заменили.*/
-    public Account removeAccount(Account account, int index) {
+    public Account setAccount(Account account, int index) {
         if (index < 0 || index > accounts.length) return null;
         Account temp = accounts[index];
         if (temp == null) size--;
         accounts[index] = account;
-        return temp;
+        return DEFAULT_ACCOUNT;
     }
+
     /*метод удаляющий элемент по номеру в массиве (принимает номер в массиве в качестве параметра).
     Возвращает удаленную из массива ссылку на экземпляр класса Account.*/
     public Account removeAccountAt(int index) {
@@ -70,17 +71,34 @@ public class AccountManager {
 
     /*метод возвращающий массив счетов (значений null в массиве быть не должно,
     его размер должен быть равен числу элементов в исходном массиве).*/
-    public Service[] getAllAccount() {
-        return Arrays.stream(accounts).filter(Objects::nonNull).toArray(Service[]::new);
+    public Account[] getAccounts(){
+        Account[] newServices = new Account[getAccountsCount()];
+        int counter = 0;
+        for (Account account : accounts){
+            if (account!=null) {
+                newServices[counter] = account;
+                counter++;
+            }
+        }
+        return newServices;
+    }
+
+    //  возвращающий ссылку на экземпляр класса IndividualsTariff для счета с заданным номером
+    public IndividualsTariff getTariff(long accountNumber){
+        for (Account account: getAccounts()){
+            if (account.getNumber()==accountNumber) return account.getTariff();
+        }
+        return DEFAULT_TARIFF;
     }
 
     /*метод возвращающий ссылку на экземпляр класса IndividualsTariff для счета с заданным
 номером.
    В качестве параметра принимает номер счета.*/
- /*   public IndividualsTariff findSIndividualsTariffByTitle(int Number) {
-        for (IndividualsTariff elem : numbers) {
-            if (Number.equals(elem.getNumber())) return elem;
+    public  IndividualsTariff setTariff(int accountNumber,IndividualsTariff tariff){
+        IndividualsTariff individualsTariff = getTariff(accountNumber);
+        for (int i = 0; i< getAccounts().length; i++){
+            if (getAccounts()[i].getNumber()==accountNumber) accounts[i].setTariff(tariff);
         }
-        return null;
-    } */
+        return individualsTariff;
+    }
 }

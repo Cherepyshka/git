@@ -5,7 +5,7 @@ public class Person<string, fName, sName> {
     private string sName;
 
     /*Конструктор принимающий два параметра – имя, фамилия.*/
-    Person(String fName,String sName){
+    public Person(String fName, String sName){
         this.fName = (string) fName;
         this.sName = (string) sName;
     }

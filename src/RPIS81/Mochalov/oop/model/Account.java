@@ -12,10 +12,16 @@ public class Account {
         System.out.println("Стоимость - 300");
     }
     public Account(long number, Person person, IndividualsTariff tariff){
-
+        this.tariff= tariff;
+        this.person = person;
+        this.number = number;
     }
+
+    public Account() {}
+
+
     //метод возвращающий номер счета
-    public long getNumber(long number) {
+    public long getNumber() {
         return number;
     }
     //метод возвращающий ссылку на экземпляр класса Person
@@ -27,11 +33,13 @@ public class Account {
         this.person = person;
     }
     //метод возвращающий ссылку на экземпляр класса IndividualsTariff
-    public IndividualsTariff getTariff(IndividualsTariff tariff){
+    public IndividualsTariff getTariff(){
         return tariff;
     }
     //метод устанавливающий новую ссылку на экземпляр класса IndividualsTariff
     public void setTariff(IndividualsTariff tariff) {
         this.tariff = tariff;
     }
+
+
 }

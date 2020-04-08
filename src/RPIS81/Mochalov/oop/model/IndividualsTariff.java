@@ -76,7 +76,7 @@ public class IndividualsTariff {
 
     /*метод изменяющий ссылку на экземпляр класса Service по его номеру в массиве.
     Принимает в качестве параметров номер и ссылку на экземпляр класса Service. Возвращает ссылку, которую заменили.*/
-    public Service removeService(Service service, int index) {
+    public Service setService(Service service, int index) {
         if (index < 0 || index > services.length) return null;
         Service temp = services[index];
         if (temp == null) size--;
